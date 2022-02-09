@@ -1,0 +1,12 @@
+@if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour < 17)
+{
+    <a class="navbar-brand">Good afternoon @ViewData["Username"].</a>
+}
+else if (DateTime.Now.Hour >= 17 || DateTime.Now.Hour < 5)
+{
+    <a class="navbar-brand">Good evening @ViewData["Username"].</a>
+}
+else
+{
+    <a class="navbar-brand">Good morning @ViewData["Username"].</a>
+}

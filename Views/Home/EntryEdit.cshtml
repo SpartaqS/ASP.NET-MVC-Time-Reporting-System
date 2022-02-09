@@ -1,0 +1,54 @@
+@model TRS.Models.EntryEdit
+
+@{
+    if(Model.Entry.Index < 0)
+    {
+        ViewData["Title"] = "Add new entry";    
+    }
+    else
+    {
+        ViewData["Title"] = "Edit entry";    
+    }
+}
+<h1>@ViewData["Title"]</h1>
+<div class="text-left">
+    <form asp-action="EntryEdit" asp-route-entry="@Model.Entry">
+        <input type="hidden" asp-for="Entry.Index"/>
+        <div class="form-group">
+            <label asp-for="Entry.ProjectCode" class="control-label">Project</label>
+            <select asp-for="Entry.ProjectCode" type="text" class="form-control" id="projectName" required>
+                <option selected value="@String.Empty"> Select the project</option>
+                @for (int i = 0; i < Model.Projects.Count; i++)
+                {
+                    <option value="@Model.Projects[i].ProjectCode">
+                        @Model.Projects[i].ProjectName
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Entry.Date" class="control-label"></label>
+            <input asp-for="Entry.Date" class="form-control" required readonly>
+        </div>
+        <div class="form-group">
+            <label asp-for="Entry.Duration" class="control-label"></label>
+            <input asp-for="Entry.Duration" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label asp-for="Entry.Description" class="control-label"></label>
+            <textarea asp-for="Entry.Description" class="form-control" required> </textarea>
+        </div>
+        <div class="text-left">
+            @if(Model.Entry.Index < 0)
+            {
+                <button type="submit" class="btn btn-primary">Create</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-primary">Save</button>
+            }
+            
+            @Html.ActionLink("Cancel", "DailyView", "Home", new { date = Model.Entry.Date.ToString("yyyy-MM-dd")}, new {@class = "btn btn-danger" })
+        </div>
+    </form>
+</div>

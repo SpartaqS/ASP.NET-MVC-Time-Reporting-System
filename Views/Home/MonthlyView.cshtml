@@ -1,0 +1,43 @@
+@model TRS.Models.MonthlyReport // any container with Entries can be displayed as a table
+@{
+    ViewData["Title"] = "Monthly Report";
+}
+<h1>@ViewData["Title"]</h1>
+<hr>
+<div class="form-group row justify-content-between">
+    <div>
+        @Html.LabelFor(Model=>Model.Month):
+        @Model.Month.ToString("yyyy-MM")
+    </div>
+    <div>
+        @Html.ActionLink("Daily View", "DailyView", "Home", new { date = @Model.Month.ToString("yyyy-MM-dd")}, new {@class = "btn btn-primary" })
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Project
+            </th>
+            <th>
+                Total Time [minutes]
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Projects) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Budget)
+            </td>            
+        </tr>
+}
+    </tbody>
+</table>
+@if(Model.Projects.Count < 1)
+{
+    @Html.Partial("_EmptyContainer")
+}

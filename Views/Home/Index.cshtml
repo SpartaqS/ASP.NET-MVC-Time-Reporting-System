@@ -1,0 +1,60 @@
+﻿@model TRS.Models.DailyScreen // any container with Entries can be displayed as a table
+@{
+    ViewData["Title"] = "Daily View";
+}
+<h1>@ViewData["Title"]</h1>
+<hr>
+<form asp-action="DailyView" asp-controller="Home" class="form-group row justify-content-between">
+    <div>
+        @Html.LabelFor(Model=>Model.Date)     
+        @Html.EditorFor(Model => Model.Date, new {htmlAttributes = new {@class = "formControl", @required="required"}})
+    <input class = "btn btn-info" type="submit" value ="Select"/>
+    </div>
+    <div>
+        @Html.ActionLink("Show Monthly Report", "MonthlyView", "Home", new { month = @Model.Date.ToString("yyyy-MM-dd")}, new {@class = "btn btn-primary" })
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Project
+            </th>
+            <th>
+                Duration [minutes]
+            </th>
+            <th>
+                Description
+            </th>
+            <th> <!-- Column for buttons -->
+                 @Html.ActionLink("Add Entry", "EntryAdd", "Home", new { date = @Model.Date.ToString("yyyy-MM-dd")}, new {@class = "btn btn-success" })
+            </th> 
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Entries) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                 <textarea class="form-control text-left" id="description" readonly>
+@item.Description
+                 </textarea>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EntryEdit", "Home", new { date = @item.Date.ToString("yyyy-MM-dd"), index = @item.Index}, new {@class = "btn btn-warning" })
+                @Html.ActionLink("Details", "DetailView", "Home", new { date = @item.Date.ToString("yyyy-MM-dd"), index = @item.Index}, new {@class = "btn btn-info" })
+                @Html.ActionLink("Delete", "EntryDelete", "Home", new { date = @item.Date.ToString("yyyy-MM-dd"), index = @item.Index}, new {@class = "btn btn-danger" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@if(Model.Entries.Count < 1)
+{
+    @Html.Partial("_EmptyContainer")
+}

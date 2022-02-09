@@ -1,0 +1,77 @@
+@model TRS.Models.Entry;
+@{
+    ViewData["Title"] = "Details View";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="text-left">
+    <div class="card card-body text-nowrap">
+        <div class = "mb-3 row text-right">
+            <div class ="col"> </div>
+            <div class="col text-center">
+                <p> Project </p>
+            </div>
+            <div class="col">
+            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#projectDetailsCollapse"
+                aria-expanded="false" aria-controls="projectDetailsCollapse">
+                Details
+            </button>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="projectName" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="projectName" readonly value="@Model.Project.ProjectName">
+            </div>
+        </div>
+        <div class="collapse" id="projectDetailsCollapse">
+            <div class="mb-3 row">
+                <label for="projectCode" class="col-sm-2 col-form-label">Code</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="projectCode" readonly value="@Model.Project.ProjectCode">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="projectBudget" class="col-sm-2 col-form-label">Budget</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="projectBudget" readonly value="@Model.Project.Budget">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="projectIsActive" class="col-sm-2 col-form-label">Active</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="projectIsActive" readonly value="@Model.Project.Active.ToString()">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-body text-nowrap">
+        <div class="text-center">
+            <p> Entry </p>
+        </div>
+        <div class="mb-3 row">
+            <label for="date" class="col-sm-2 col-form-label">Date</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="projectCode" disabled readonly value =@Model.Date> 
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="duration" class="col-sm-2 col-form-label">Duration</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="duration" disabled readonly value="@Model.Duration">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="description" class="col-sm-2 col-form-label">Description</label>
+             <div class="col-sm-10">
+                 <textarea class="form-control" id="description" disabled readonly>
+@Model.Description
+                 </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="text-left">
+        @Html.ActionLink("Close detail view", "DailyView", "Home", new { date = Model.Date.ToString("yyyy-MM-dd")}, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Edit", "EntryEdit", "Home", new { date = @Model.Date.ToString("yyyy-MM-dd"), index = @Model.Index}, new {@class = "btn btn-warning" })
+        @Html.ActionLink("Delete", "EntryDelete", "Home", new { date = @Model.Date.ToString("yyyy-MM-dd"), index = @Model.Index}, new {@class = "btn btn-danger" })           
+    </div>
+</div>

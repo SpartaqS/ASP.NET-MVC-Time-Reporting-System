@@ -1,0 +1,13 @@
+﻿@model TRS.Models.LoginScreen // any container with Entries can be displayed as a table
+@{
+    ViewData["Title"] = "Login";
+}
+<h1>@ViewData["Title"]</h1>
+<p>Please log in to the Time Reporting System</p>
+<form asp-action="Login" asp-controller="Login">
+    @Html.LabelFor(Model=>Model.Username)     
+    @Html.EditorFor(Model => Model.Username, new {htmlAttributes = new {@class = "formControl", @required="required"}})
+    <div>
+        <input class = "btn btn-primary" type="submit" value ="Log in"/>
+    </div>
+</form>
